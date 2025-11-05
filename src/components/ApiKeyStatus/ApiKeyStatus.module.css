@@ -1,0 +1,24 @@
+.ApiKeyStatus {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem;
+  color: #856404;
+}
+
+.ApiKeyStatus h3 {
+  margin-top: 0;
+  color: #d63031;
+}
+
+.ApiKeyStatus ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.ApiKeyStatus li {
+  margin: 0.25rem 0;
+  font-family: monospace;
+  font-size: 0.9rem;
+}

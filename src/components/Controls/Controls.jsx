@@ -17,8 +17,9 @@ export function Controls({ isDisabled = false, onSend }) {
   }
 
   function handleContentSend() {
-    if (content.length > 0) {
-      onSend(content);
+    const trimmedContent = content.trim();
+    if (trimmedContent.length > 0) {
+      onSend(trimmedContent);
       setContent("");
     }
   }

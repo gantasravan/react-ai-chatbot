@@ -26,11 +26,17 @@ export function Assistant({ onAssistantChange }) {
     const AssistantClass = assistantMap[assistant];
 
     if (!AssistantClass) {
-      throw new Error(`Unknown assistant: ${assistant} or model: ${model}`);
+      console.error(`Unknown assistant: ${assistant} or model: ${model}`);
+      return;
     }
 
-    onAssistantChange(new AssistantClass(model));
-  }, [value]);
+    try {
+      onAssistantChange(new AssistantClass(model));
+    } catch (error) {
+      console.error(`Failed to initialize ${assistant}:`, error.message);
+      // Show user-friendly error instead of crashing
+    }
+  }, [value, onAssistantChange]);
 
   return (
     <div className={styles.Assistant}>

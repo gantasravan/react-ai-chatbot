@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { Chat } from "./components/Chat/Chat";
 import { Assistant } from "./components/Assistant/Assistant";
 import { Theme } from "./components/Theme/Theme";
+import { ApiKeyStatus } from "./components/ApiKeyStatus/ApiKeyStatus";
 import styles from "./App.module.css";
 
 function App() {
@@ -19,11 +20,11 @@ function App() {
     handleNewChatCreate();
   }, []);
 
-  function handleAssistantChange(newAssistant) {
+  const handleAssistantChange = useCallback((newAssistant) => {
     setAssistant(newAssistant);
-  }
+  }, []);
 
-  function handleChatMessagesUpdate(id, messages) {
+  const handleChatMessagesUpdate = useCallback((id, messages) => {
     const title = messages[0]?.content.split(" ").slice(0, 7).join(" ");
 
     setChats((prevChats) =>
@@ -33,21 +34,21 @@ function App() {
           : chat
       )
     );
-  }
+  }, []);
 
-  function handleNewChatCreate() {
+  const handleNewChatCreate = useCallback(() => {
     const id = uuidv4();
 
     setActiveChatId(id);
     setChats((prevChats) => [...prevChats, { id, messages: [] }]);
-  }
+  }, []);
 
-  function handleActiveChatIdChange(id) {
+  const handleActiveChatIdChange = useCallback((id) => {
     setActiveChatId(id);
     setChats((prevChats) =>
       prevChats.filter(({ messages }) => messages.length > 0)
     );
-  }
+  }, []);
 
   return (
     <div className={styles.App}>
@@ -66,6 +67,8 @@ function App() {
         />
 
         <main className={styles.Main}>
+          <ApiKeyStatus />
+          
           {chats.map((chat) => (
             <Chat
               key={chat.id}
